@@ -1,0 +1,40 @@
+{% extends "partials/auth.html" %}
+{% block main %}
+<main class="form-signin w-100 m-auto">
+    {% if error %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>We were not able to sign you up!</strong> Check your Username and Password and try again.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <form action="/signup" method="post">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-normal">Create an Account</h1>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput" name="username" placeholder="John Doe"
+                autocomplete="off" required pattern="^[a-zA-Z0-9_-]{4, 16}$">
+            <label for="floatingInput">Username</label>
+            <div id="usernameHelpBlock" class="form-text">
+                Your username should be 4 to 16 characters long, and contain letters, numbers, an underscore(_) or a
+                hyphen(-) and should not contain any special characters or emojis.
+            </div>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" name="password1" placeholder="Password"
+                autocomplete="off" required>
+            <label for="floatingPassword">Password</label>
+            <div id="passwordHelpBlock" class="form-text">
+                Your password must contain between 8-20 characters, it should be a mix of letters, numbers, and special
+                characters [@$!%*?&].
+            </div>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword2" name="password2"
+                placeholder="Confirm Password" autocomplete="off" required>
+            <label for="floatingPassword2">Confirm Password</label>
+        </div>
+        <button class="btn btn-success w-100 py-2" type="submit">Sign Up</button>
+    </form>
+</main>
+{% endblock %}

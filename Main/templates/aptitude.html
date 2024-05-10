@@ -1,0 +1,48 @@
+{% extends "partials/shared.html" %}
+{% load custom %}
+
+{% block main %}
+<div>
+  <div class="container my-5">
+    <div class="p-5 text-center bg-body-tertiary rounded-3">
+      <h1 class="text-body-emphasis">Aptitude Test</h1>
+      <p class="col-lg-8 mx-auto fs-5 text-muted">
+        This test is aimed at testing your knowledge in the field specified. Ensure that you answer all questions
+      </p>
+      <div class="d-inline-flex gap-2 mb-5">
+        <button class="d-inline-flex align-items-center btn btn-success btn-lg px-4 rounded-pill" id="submitResponses" type="button">
+          Submit Attempt
+        </button>
+        <button class="d-inline-flex align-items-center btn btn-secondary btn-lg px-4 rounded-pill" id="saveResponses" type="button">
+          Save Responses
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <form action="{% url 'aptitude_test' job_id %}" method="post">
+    {% csrf_token %}
+    {% for question in questions %}
+      <label for="question_{{ question.pk }}">{{ question.question }}</label>
+      <div class="input-group mb-3">
+        <label class="input-group-text" for="question_{{ question.pk }}">Options</label>
+        <select class="form-select" id="question_{{ question.pk }}" name="{{ question.pk }}">
+          <option value="" selected disabled>Choose...</option>
+          {% for option in question.get_options %}
+            {% if question.pk in completed_attempts %}
+              {% if completed_attempts|lookup:question.pk == forloop.counter0 %}
+                <option value="{{ forloop.counter0 }}" selected>{{ option }}</option>
+              {% else %}
+                <option value="{{ forloop.counter0 }}">{{ option }}</option>
+              {% endif %}
+            {% else %}
+              <option value="{{ forloop.counter0 }}">{{ option }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    {% endfor %}
+    <input type="hidden" name="completed" id="formCompleted" value="True">
+  </form>
+</div>
+{% endblock %}

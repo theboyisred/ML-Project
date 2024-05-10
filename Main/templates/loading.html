@@ -1,0 +1,34 @@
+{% extends "partials/auth.html" %}
+{% block main %}
+<div class="container my-5">
+    <div class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5">
+        <div>
+            <div class="spinner-grow" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <h1 class="text-body-emphasis">Responses Are Being Processed</h1>
+        <p class="col-lg-6 mx-auto mb-4">Hold on a while, your responses are being processed. You can leave the page,
+            your responses will still be processed</p>
+        <button class="btn btn-success px-5 mb-5" type="button" onclick="backToHome()">
+            Back To Home
+        </button>
+    </div>
+</div>
+{% block script %}
+<script>
+    function backToHome() {
+        window.location.href = "{% url 'index' %}"
+    }
+    setTimeout(() => {
+        window.location.href = "{% url 'success' %}"
+    }, 5000)
+</script>
+{% endblock %}
+{% endblock %}

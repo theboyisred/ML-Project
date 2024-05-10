@@ -1,0 +1,88 @@
+{% extends "partials/shared.html" %}
+
+{% block main %}
+<div>
+    <div class="container my-5">
+        <div class="p-5 text-center bg-body-tertiary rounded-3">
+            <h1 class="text-body-emphasis">Curriculum Vitae</h1>
+            <p class="col-lg-8 mx-auto fs-5 text-muted">
+                This is to collect a brief information about your Work Profile. You will still be required to send in
+                your full CV if you are considered for this role.
+            </p>
+            <div class="d-inline-flex gap-2 mb-5">
+                <button class="d-inline-flex align-items-center btn btn-success btn-lg px-4 rounded-pill" type="submit"
+                    form="cv_form">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <form action="{% url 'cv' job_id %}" method="post" id="cv_form">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="full_name" class="form-label">Full Name</label>
+            <input class="form-control" type="text" id="full_name" placeholder="Enter Your Name Here" required
+                name="name">
+        </div>
+        <div class="mb-3">
+            <label for="email_address" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email_address" placeholder="name@example.com" required
+                autocomplete="off" name="email">
+        </div>
+
+        <div>
+            <label class="form-label">Previous Work Experience</label>
+            {% for x in range %}
+            <div class="row mb-3">
+                {% if forloop.first %}
+                <div class="col">
+                    <input type="text" class="form-control" aria-label="Job Name" placeholder="Job Name"
+                        name="job{{forloop.counter}}" required>
+                    <div id="jobHelpBlock" class="form-text">
+                        Add Your Most Significant Work Experience Details. At least one is required
+                    </div>
+                </div>
+                <div class="col">
+                    <input type="number" class="form-control" min="1" aria-label="Experience"
+                        name="exp{{forloop.counter}}" required>
+                </div>
+                {% else %}
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Job Name" aria-label="Job Name"
+                        name="job{{forloop.counter}}">
+                </div>
+                <div class="col">
+                    <input type="number" class="form-control" min="1" aria-label="Experience"
+                        name="exp{{forloop.counter}}">
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+</div>
+<div class="mb-3">
+    <select class="form-select" name="qualification" required>
+        <option selected disabled>Select a Qualification Level</option>
+        <option value="SSCE">Senior Secondary School Certificate</option>
+        <option value="HND">Higher National Diploma</option>
+        <option value="DEG">University Degree</option>
+        <option value="MAS">Masters Degree</option>
+        <option value="PHD">Doctorate of Philosophy (PhD.)</option>
+    </select>
+</div>
+<div class="mb-3">
+    <label for="hobbies" class="form-label">Hobbies/Interests</label>
+    <textarea class="form-control" id="hobbies" rows="3" name="hobbies" required></textarea>
+    <div id="hobbiesHelpBlock" class="form-text">
+        Separate every hobby by a comma.
+    </div>
+</div>
+<div class="mb-3">
+    <label for="DOB" class="form-label">Date of Birth</label>
+    <input class="form-control" type="date" id="DOB" name="DOB" min="1900-01-01" max="{{ valid_date }}" required>
+</div>
+</form>
+</div>
+{% endblock %}

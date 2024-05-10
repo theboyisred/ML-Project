@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include "partials/head.html" %}
+
+<body>
+    <div class="Main container mt-4">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            {% if is_admin %}
+            <a class="btn btn-success" role="button" href="/admin">Admin Panel</a>
+            {% endif %}
+            <button class="btn btn-dark" type="button" onclick="logout()">Logout</button>
+        </div>
+        {% block main %}
+        {% endblock %}
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/utils.js' %}"></script>
+</body>
+
+</html>

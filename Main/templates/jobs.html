@@ -1,0 +1,27 @@
+{% extends "partials/shared.html" %}
+{% block main %}
+<div>
+  <div class="container my-5">
+    <div class="p-5 text-center bg-body-tertiary rounded-3">
+      <h1 class="text-body-emphasis">Job Board</h1>
+      <p class="lead">
+        Keep yourself posted on all the openings available at our company!
+      </p>
+    </div>
+  </div>
+    <div class="list-group">
+        {% for job in jobs %}
+        <a href="{% url 'job_details' job.pk %}" class="list-group-item list-group-item-action" aria-current="true">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{job.name}}</h5>
+            {# <small>{{job.date_posted}}</small> #}
+          </div>
+          <p class="mb-1">{{ job.description|truncatewords:10 }}</p>
+          <small>{{job.wages}}</small>
+        </a>
+        {% empty %}
+        <p class="lead">Sorry, there are no jobs available at this time.</p>
+        {% endfor %}
+      </div>
+</div>
+{% endblock %}
